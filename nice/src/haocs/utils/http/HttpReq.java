@@ -1,4 +1,4 @@
-package haocs;
+package haocs.utils.http;
 
 import java.io.IOException;
 import java.util.Date;
@@ -26,6 +26,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 /**
+ *模拟 POST请求
+ * 
  * @author haocs
  */
 public class HttpReq implements Runnable {

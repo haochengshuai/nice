@@ -1,11 +1,11 @@
-package haocs.logic;
+package haocs.utils.operation;
 
 import java.util.Scanner;
 
 import org.apache.commons.lang.StringUtils;
 
 /**
- * 
+ *  四则运算 暂不支持负数 
  * @author haocs
  * @since 2017年7月21日15:04:49
  */
