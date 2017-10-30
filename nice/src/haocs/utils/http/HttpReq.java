@@ -33,8 +33,9 @@ import com.alibaba.fastjson.JSONObject;
 public class HttpReq implements Runnable {
 	
 	private String requestName = "";
+	private String url = "";
 	
-	private static final int countNum = 1000;
+	private static final int countNum = 1;
 
 	private static CloseableHttpResponse response = null;
 
@@ -55,15 +56,16 @@ public class HttpReq implements Runnable {
 		initContext();
 	}
 	
-	public HttpReq(String requestName) {
+	public HttpReq(String requestName,String url) {
 		this.requestName = requestName;
+		this.url = url;
 	}
 	
 	private static void initPostParam() {
 		postParaMap = new HashMap<String, JSONObject>();
 		JSONObject jsonParam = new JSONObject();
 		jsonParam = JSON.parseObject("");
-		postParaMap.put("http://127.0.0.1/manager/product/order", jsonParam);
+		postParaMap.put("http://locahost/manager/product/order", jsonParam);
 	}
 	
 	private static void initContext() {
@@ -110,7 +112,8 @@ public class HttpReq implements Runnable {
 			//访问数
 			for(int i = 0; i < countNum; i++) {
 				//随机拿请求
-				String key = (String)postParaMap.keySet().toArray()[random.nextInt(2)];
+				String key = (String)postParaMap.keySet().toArray()[0];
+				
 				HttpPost post = new HttpPost(key);
 				JSONObject jsonParam = new JSONObject();
 				StringEntity entity = new StringEntity(postParaMap.get(key).toJSONString(), "");
@@ -128,16 +131,16 @@ public class HttpReq implements Runnable {
 							+ EntityUtils.toString(httpEntity, "UTF-8"));
 					System.out.println("--------------------------------------");
 				}
-//				if((i % 100) == 0) {
-//					Thread.sleep(10000);
-//				}
+				if((i % 100) == 0) {
+					Thread.sleep(10000);
+				}
 			}
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		} finally {
 			closeResponse();
 		}
@@ -155,7 +158,7 @@ public class HttpReq implements Runnable {
  
 	public static void main(String[] args) {
 		for(int i = 0; i < 200; i++) {
-			HttpReq request = new HttpReq("request" + i);
+			HttpReq request = new HttpReq("request" + i,"");
 			new Thread(request).start();
 		}
 	}
